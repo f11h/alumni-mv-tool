@@ -1,70 +1,88 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {AppComponent} from './app.component';
+import {FullLayoutComponent, SimpleLayoutComponent} from './containers';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './components/login/login.component';
+const APP_CONTAINERS = [
+    FullLayoutComponent,
+    SimpleLayoutComponent
+];
+
+// Import components
 import {
-    MatButtonModule, MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatProgressSpinnerModule, MatRadioModule, MatSelectModule, MatSnackBarModule,
-    MatStepperModule,
-    MatToolbarModule,
-} from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { HttpClientModule } from '@angular/common/http';
-import { CourselistComponent } from './components/courselist/courselist.component';
-import { TokenlistComponent } from './components/tokenlist/tokenlist.component';
-import { QRCodeModule } from 'angularx-qrcode';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+    AppBreadcrumbsComponent,
+    AppFooterComponent,
+    AppHeaderComponent,
+    AppSidebarComponent,
+    AppSidebarFooterComponent,
+    AppSidebarFormComponent,
+    AppSidebarHeaderComponent,
+    AppSidebarMinimizerComponent,
+    APP_SIDEBAR_NAV
+} from './components';
+
+const APP_COMPONENTS = [
+    AppBreadcrumbsComponent,
+    AppFooterComponent,
+    AppHeaderComponent,
+    AppSidebarComponent,
+    AppSidebarFooterComponent,
+    AppSidebarFormComponent,
+    AppSidebarHeaderComponent,
+    AppSidebarMinimizerComponent,
+    APP_SIDEBAR_NAV
+];
+
+// Import directives
+import {NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES} from './directives';
+
+const APP_DIRECTIVES = [
+    NAV_DROPDOWN_DIRECTIVES,
+    ReplaceDirective,
+    SIDEBAR_TOGGLE_DIRECTIVES
+];
+
+import {AppRoutingModule} from './app.routing';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {TabsModule} from 'ngx-bootstrap/tabs';
+import {HttpClientModule} from '@angular/common/http';
+import {SharedModule} from './shared/shared.module';
+import {PagesModule} from './pages/pages.module';
+import {environment} from '../environments/environment';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {AppUpdateCheckComponent} from './components/app-update-check/app-update-check.component';
+import {ModalModule} from 'ngx-bootstrap/modal';
+import {ChartsModule} from "ng2-charts";
+import {SpinnerModule} from "spinner-angular";
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        LoginComponent,
-        CourselistComponent,
-        TokenlistComponent,
-    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatStepperModule,
-        FlexLayoutModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
+        BsDropdownModule.forRoot(),
+        TabsModule.forRoot(),
+        ChartsModule,
         HttpClientModule,
-        MatGridListModule,
-        MatExpansionModule,
-        MatRadioModule,
-        MatDividerModule,
-        MatSnackBarModule,
-        MatSelectModule,
-        QRCodeModule,
+        SharedModule,
+        PagesModule,
+        SpinnerModule.forRoot({}),
+        ModalModule.forRoot(),
+        SharedModule,
+        environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : []
     ],
-    providers: [
-        {
-            provide: STEPPER_GLOBAL_OPTIONS,
-            useValue: { displayDefaultIndicatorType: false },
-        },
-        {
-            provide: LocationStrategy,
-            useClass: HashLocationStrategy,
-        },
-    ],
-    bootstrap: [
+    declarations: [
         AppComponent,
+        ...APP_CONTAINERS,
+        ...APP_COMPONENTS,
+        ...APP_DIRECTIVES,
+        AppUpdateCheckComponent,
     ],
+    providers: [{
+        provide: LocationStrategy,
+        useClass: HashLocationStrategy
+    }],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

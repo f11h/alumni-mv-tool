@@ -1,40 +1,34 @@
 import {GlobalAcceptMimesMiddleware, ServerLoader, ServerSettings} from '@tsed/common';
 import "@tsed/typeorm";
+import * as compress from "compression";
+import * as bodyParser from "body-parser";
+import * as methodOverride from "method-override";
+import * as cookieParser from "cookie-parser";
 
 @ServerSettings({
     statics: {
         "/": `${__dirname}/frontend_files`
     },
+    mount: {
+        "/api": "${rootDir}/controllers/**/*.(js|ts)"
+    },
     rootDir: __dirname,
-    acceptMimes: ['application/json'],
-    password: process.env.ATT_AUTH || "ultrasecuresecret",
-    typeorm: [
-        {
-            name: 'default',
-            type: 'mariadb',
-            entities: [
-                `${__dirname}/model/**/*`
-            ],
-            host: process.env.DB_HOST || 'localhost',
-            port: parseInt(process.env.DB_PORT, 10) || 3306,
-            username: process.env.DB_USER || 'att',
-            password: process.env.DB_PASSWORD || 'att',
-            database: process.env.DB_DB || 'att',
-            synchronize: true
-        }
-    ]
+    acceptMimes: ['application/json']
 })
 export class Server extends ServerLoader {
 
     // noinspection JSUnusedGlobalSymbols
-    public $onMountingMiddlewares(): void {
+
+    public $beforeRoutesInit(): void | Promise<any> {
         this
             .use(GlobalAcceptMimesMiddleware)
-            .use(require('cookie-parser')())
-            .use(require('compression')({}))
-            .use(require('body-parser').json())
-            .use(require('body-parser').urlencoded({extended: true}));
+            .use(cookieParser())
+            .use(compress({}))
+            .use(methodOverride())
+            .use(bodyParser.json())
+            .use(bodyParser.urlencoded({
+                extended: true
+            }));
+    }
 
-        return null;
-    };
 }

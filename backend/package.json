@@ -1,7 +1,7 @@
 {
-  "name": "alumni-tage-tool-backend",
+  "name": "alumni-mv-tool-backend",
   "version": "0.0.0",
-  "description": "Ein kleines Tool zum tokenbasierten Einschreiben in angebotene Kurse des Alumni Lenné e.V. zu den alljährlichen Alumni Tagen",
+  "description": "Tool for members of the Alumni Lenné e.V. for self administrating their membership.",
   "scripts": {
     "start": "nodemon --watch **/* -e ts --ignore 'node_modules/**/*' --exec ts-node --project tsconfig.json index.ts",
     "build": "tsc -p tsconfig.json"
@@ -13,26 +13,30 @@
   "author": "Felix Dittrich <vorstand@alumni-lenne-de>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/f11h/alumni-tage-tool/issues"
+    "url": "https://github.com/f11h/alumni-mv-tool/issues"
   },
-  "homepage": "https://github.com/f11h/alumni-tage-tool#readme",
+  "homepage": "https://github.com/f11h/alumni-mv-tool#readme",
   "devDependencies": {
-    "@types/express": "^4.17.0",
-    "nodemon": "^1.19.1",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "@types/express": "^4.17.7",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7",
+    "@types/bcrypt": "^3.0.0"
   },
   "dependencies": {
-    "@tsed/common": "^5.24.1",
-    "@tsed/core": "^5.24.1",
-    "@tsed/di": "^5.24.1",
-    "@tsed/typeorm": "^5.24.1",
+    "@tsed/common": "^5.60.7",
+    "@tsed/core": "^5.60.7",
+    "@tsed/di": "^5.60.7",
+    "@tsed/typeorm": "^5.60.7",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
-    "cookie-parser": "^1.4.4",
+    "config": "^3.3.1",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "method-override": "^3.0.0",
-    "mysql2": "^1.6.5",
-    "typeorm": "^0.2.18"
+    "mysql2": "^2.1.0",
+    "ts-httpexceptions": "^4.1.0",
+    "typeorm": "^0.2.25"
   }
 }

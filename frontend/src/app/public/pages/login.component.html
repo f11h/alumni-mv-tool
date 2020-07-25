@@ -1,0 +1,118 @@
+<div (load)="bcm = badCredentialsModal" class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-group">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            <form [formGroup]="form" (submit)="onSubmit(badCredentialsModal)">
+                                <h1>Login</h1>
+                                <p class="text-muted">Melde dich an bei QCODIS</p>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">@</span>
+                                    </div>
+                                    <input type="email" class="form-control" placeholder="E-Mail"
+                                           formControlName="email">
+                                </div>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="icon-lock"></i></span>
+                                    </div>
+                                    <input type="password" class="form-control" placeholder="Passwort"
+                                           formControlName="password">
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="autoLoginCheck"
+                                               formControlName="autoLogin">
+                                        <label class="form-check-label" for="autoLoginCheck">
+                                            Automatisch anmelden
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary px-4"
+                                                [disabled]="form.invalid || isLoginInProgress">
+                                            <spinner *ngIf="isLoginInProgress" display="inline"></spinner>
+                                            Login
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button type="button" class="btn btn-link px-0"
+                                                (click)="passwordRecoverModal.show()">Passwort vergessen
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row d-lg-none d-sm-block">
+                            <div class="col-12 mt-4">
+                                Du hast noch keinen Account für QCODIS? Diesen kannst Du <a
+                                    [routerLink]="['..', 'register']">hier</a> erstellen.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+                        <div class="card-body text-center pt-5">
+                            <div>
+                                <h2>Registrierung</h2>
+                                <p>Um QCODIS nutzen zu können, benötigst Du einen Account. Diesen kannst Du hier
+                                    kostenlos
+                                    erstellen.</p>
+                                <button type="button" class="btn btn-primary active mt-3"
+                                        [routerLink]="['..', 'register']">
+                                    Jetzt Registrieren!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #passwordRecoverModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-warning" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Passwort vergessen</h4>
+                <button type="button" class="close" (click)="passwordRecoverModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Um dein Passwort zurückzusetzen wende dich bitte an den Support über die E-Mail Adresse <a
+                        href="mailto:support@qcodis.coffee?subject=Passwort%20vergessen">support@qcodis.coffee</a>
+                </p>
+                <p>Gemeinsam werden wir eine Lösung finden, damit Du wieder Zugriff auf deinen Account erhälst.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" (click)="passwordRecoverModal.hide()">Schließen
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #badCredentialsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ungültige Zugangsdaten</h4>
+                <button type="button" class="close" (click)="badCredentialsModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Die Kombination aus E-Mail Adresse und Passwort ist leider falsch.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="badCredentialsModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>

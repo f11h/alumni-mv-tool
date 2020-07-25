@@ -1,0 +1,77 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-plus"></i>
+        Zahlung erfassen
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(paymentCreatedModal, failedModal)">
+            <app-user-selector (onUserSelected)="onUserSelected($event)"
+                               [disabled]="isSavingInProgress"></app-user-selector>
+            <label class="col-form-label" for="amount">Betrag</label>
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" id="amount" placeholder="Gib den Betrag der Zahlung ein" type="text" formControlName="amount">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-euro"></i></span>
+                    </div>
+                </div>
+            </div>
+            <label class="col-form-label" for="method">Zahlart</label>
+            <div class="form-group">
+                <input class="form-control" id="method" placeholder="Gib an, wie die Zahlung eingegangen ist" type="text" formControlName="method">
+                <span class="pl-3 help-block">
+                    <a role="link" (click)="form.get('method').setValue('Überweisung')">Überweisung</a>
+                    <a role="link" (click)="form.get('method').setValue('Bar')">Bar</a>
+                    <a role="link" (click)="form.get('method').setValue('PayPal')">PayPal</a>
+                </span>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit"
+                        [disabled]="form.invalid || !selectedUser || isSavingInProgress">
+                    <spinner display="inline" *ngIf="isSavingInProgress"></spinner>
+                    Zahlung speichern
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div bsModal #paymentCreatedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Zahlung gespeichert</h4>
+                <button type="button" class="close" (click)="paymentCreatedModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Die Einzahlung des Nutzers wurde gespeichert und der Benutzer per E-Mail informiert.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="paymentCreatedModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #failedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Fehler</h4>
+                <button type="button" class="close" (click)="failedModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Beim Speichern der Zahlung ist ein Fehler aufgetreten. Bitte versuche es später erneut.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="failedModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>

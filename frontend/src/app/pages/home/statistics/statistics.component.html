@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card-header" *ngIf="scope === 'user'">
+        <i class="fa fa-bar-chart"></i>Deine Statistiken
+    </div>
+    <div class="card-header" *ngIf="scope === 'global'">
+        <i class="fa fa-bar-chart"></i>Globale Statistiken
+    </div>
+    <div class="card-body">
+        <spinner *ngIf="!statistics"></spinner>
+        <table class="table" *ngIf="statistics">
+            <tbody>
+            <tr>
+                <td>Heute</td>
+                <td>{{statistics.coffeeToday}}</td>
+            </tr>
+            <tr>
+                <td>Gestern</td>
+                <td>{{statistics.coffeeYesterday}}</td>
+            </tr>
+            <tr>
+                <td>Diese Woche</td>
+                <td>{{statistics.coffeeThisWeek}}</td>
+            </tr>
+            <tr>
+                <td>Letzte Woche</td>
+                <td>{{statistics.coffeeLastWeek}}</td>
+            </tr>
+            <tr>
+                <td>Dieser Monat</td>
+                <td>{{statistics.coffeeThisMonth}}</td>
+            </tr>
+            <tr>
+                <td>Letzter Monat</td>
+                <td>{{statistics.coffeeLastMonth}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

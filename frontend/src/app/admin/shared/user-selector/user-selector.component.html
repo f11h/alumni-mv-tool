@@ -1,0 +1,68 @@
+<div class="form-group">
+    <label class="col-form-label" for="appendedInputButton">Benutzer</label>
+    <div class="controls">
+        <div class="input-group">
+            <input class="form-control" id="appendedInputButton" size="16" type="text" [(ngModel)]="selectedUserText"
+                   (click)="loadUsers();userSelectorModal.show()" readonly [disabled]="disabled">
+            <span class="input-group-append">
+                  <button class="btn btn-secondary" type="button" (click)="loadUsers();userSelectorModal.show()"
+                          [disabled]="disabled">Benutzer auswählen</button>
+                </span>
+        </div>
+    </div>
+</div>
+
+<div bsModal #userSelectorModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-primary" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Benutzer auswählen</h4>
+                <button type="button" class="close" (click)="userSelectorModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-search"></i>&nbsp;Suche
+                            </span>
+                            </div>
+                            <input class="form-control" placeholder="Name, E-Mail oder ID" type="text"
+                                   [(ngModel)]="searchTerm" (keyup)="filter()">
+                        </div>
+                    </div>
+                </div>
+                <p>Es werden maximal 5 Benutzer angezeigt. Verfeinere die Suche, sollte der gewünschte Benutzer noch
+                    nicht angezeigt werden.</p>
+                <spinner *ngIf="!users"></spinner>
+                <table class="table table-hover" *ngIf="users">
+                    <thead>
+                    <tr>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>E-Mail</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr style="cursor: pointer;" *ngFor="let user of filteredUsers"
+                        (click)="userClicked(user);userSelectorModal.hide()">
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <alert type="warning" *ngIf="users && filteredUsers && filteredUsers.length === 0">Es wurden keine
+                    Benutzer gefunden, die den Suchkriterien entsprechen
+                </alert>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" (click)="userSelectorModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>

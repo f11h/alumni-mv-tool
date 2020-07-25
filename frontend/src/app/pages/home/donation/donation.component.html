@@ -1,0 +1,86 @@
+<div class="card" *ngIf="show">
+    <div class="card-header">
+        <i class="fa fa-tree"></i>QCODIS Weihnachten
+    </div>
+    <div class="card-body">
+        <b>Gutes tun mit QCODIS Kaffee!</b><br/>
+        Trage Deinen individuellen Spendenbetrag ein. Bei jedem Kauf eines Kaffees wird dieser Betrag von Deinem
+        Guthaben gespendet. <a href="#" (click)="donationInfoModal.show()">weitere Informationen</a><br/>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(donationSavedModal)">
+            <label class="col-form-label" for="amount"></label>
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" id="amount" placeholder="Gib den Betrag der Spende ein" type="text"
+                           formControlName="amount">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fa fa-euro"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit"
+                        [disabled]="form.invalid || isSavingInProgress">
+                    <spinner display="inline" *ngIf="isSavingInProgress"></spinner>
+                    Spendenbetrag speichern
+                </button>
+            </div>
+        </form>
+        <hr/>
+        <div class="text-center font-lg">Aktueller Spendenstand:
+            <spinner display="inline" *ngIf="currentDonationValue === undefined"></spinner>
+            <ng-container *ngIf="currentDonationValue !== undefined">{{currentDonationValue | moneyFormat}}€</ng-container>
+        </div>
+    </div>
+</div>
+
+<div bsModal #donationSavedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Spendenbetrag gespeichert</h4>
+                <button type="button" class="close" (click)="donationSavedModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Dein Spendenbetrag wurde gespeichert. Vielen Dank!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="donationSavedModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #donationInfoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">QCODIS Weihnachten</h4>
+                <button type="button" class="close" (click)="donationInfoModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Weihnachten auch an andere denken. Unter diesem Motto steht die diesjährige Weihnachtsaktion von QCODIS.</p>
+                <p>Vom 01.12.2018 bis zum 21.12.2018 kann mit jeder Tasse Kaffee Gutes getan werden. Dazu ist auch gar nichts weiter zu tun, denn bei jedem Kauf eines Getränks von QCODIS wird das Dreifache vom Kaufpreis für einen guten Zweck gespendet!</p>
+                <p>Aber das ist noch nicht alles: Auch Du kannst dich an der Spendenaktion beteiligen. Durch Deinen Spendenbeitrag kannst Du den von QCODIS gespendeten Betrag individuell aufstocken.
+                Dazu musst Du lediglich den Betrag auf der QCODIS-Startseite eintragen und dann wird bei jedem Kauf dieser Betrag von deinem Guthaben abgezogen und ebenfalls der Spendensumme angerechnet.</p>
+                <p>Der aktuelle Gesamtbetrag kann immer auf der QCODIS-Startseite eingesehen werden. Pünktlich zum 24.12.2018 wird der gesammelte Betrag an zwei Organisationen gespendet:</p>
+                <ul>
+                    <li>zu <b>75%</b> an <b>Tafel Deutschland e.V.</b></li>
+                    <li>zu <b>25%</b> an <b>VIER PFOTEN - Stiftung für Tierschutz</b></li>
+                </ul>
+                <p>Damit auch denen, die uns jeden Tag den Genuss von Kaffee ermöglichen, gedacht wird, gibt es im gesamten Zeitraum der Weihnachtsaktion fair gehandelten - durch Fair Trade zertifizierten - Kaffee.</p>
+                <p><b>Also trinkt viel Kaffee und habt eine schöne Weihnachtszeit :-)</b></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" (click)="donationInfoModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>

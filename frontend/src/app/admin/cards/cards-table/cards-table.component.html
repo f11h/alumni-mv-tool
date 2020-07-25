@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-header">
+        Eingerichtete Karten
+    </div>
+    <div class="card-body">
+        <alert *ngIf="cards && cards.length === 0" type="warning">Es konnten keine Karten gefunden werden.
+        </alert>
+        <spinner *ngIf="!cards"></spinner>
+        <div *ngIf="cards && cards.length > 0">
+            <div class="form-group row">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fa fa-search"></i>&nbsp;Suche
+                            </span>
+                        </div>
+                        <input class="form-control" placeholder="Karten ID oder Benutzereigenschaft" type="text" [(ngModel)]="searchTerm" (keyup)="filter()">
+                    </div>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID Karte</th>
+                    <th>Name Besitzer</th>
+                    <th>E-Mail Besitzer</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let card of displayedCards">
+                    <td>{{ card.cardId }}</td>
+                    <td *ngIf="!card.owner.id">
+                        <spinner display="inline"></spinner>
+                    </td>
+                    <td *ngIf="card.owner.id">{{ card.owner.firstname }} {{ card.owner.lastname}}</td>
+                    <td *ngIf="!card.owner.id">
+                        <spinner display="inline"></spinner>
+                    </td>
+                    <td *ngIf="card.owner.id">{{ card.owner.email }}</td>
+                    <td>
+                        <button *ngIf="!card.deletionInProgress" class="badge btn btn-sm btn-danger" type="button" (click)="deleteCardLink(card)"><i class="fa fa-remove"></i></button>
+                        <spinner display="inline" *ngIf="card.deletionInProgress"></spinner>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <pagination [boundaryLinks]="true" [totalItems]="filteredCards.length" [(ngModel)]="currentPage"
+                        (pageChanged)="pageChanged($event)" class="pagination text-center"
+                        [itemsPerPage]="itemsPerPage" [maxSize]="6"
+                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+        </div>
+    </div>
+</div>

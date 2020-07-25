@@ -1,3 +1,4 @@
+/*
 import {Injectable} from '@tsed/di';
 import {TypeORMService} from '@tsed/typeorm';
 import {Repository} from 'typeorm';
@@ -98,3 +99,4 @@ export class AttendeeService implements OnServerReady {
         await this.repo.save(attendee);
     }
 }
+*/

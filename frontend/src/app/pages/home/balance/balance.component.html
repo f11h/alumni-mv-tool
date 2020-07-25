@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-body p-3 clearfix">
+    <i class="fa fa-eur bg-primary p-3 font-2xl mr-3 float-left"></i>
+    <div class="h5 text-primary mb-0 mt-2" *ngIf="balance !== undefined">{{balance | moneyFormat}} €</div>
+    <spinner display="inline" *ngIf="balance === undefined"></spinner>
+    <div class="text-muted text-uppercase font-weight-bold font-xs">Guthaben</div>
+    <div class="text-danger font-xs" *ngIf="balance <= 50">Bitte lade dein Konto auf!</div>
+  </div>
+  <div class="card-footer px-3 py-2">
+    <a class="font-weight-bold font-xs btn-block text-muted" href="#" (click)="depositModal.show()">Guthaben aufladen <i class="fa fa-angle-right float-right font-lg"></i></a>
+  </div>
+</div>
+
+<div bsModal #depositModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Guthaben Aufladen</h4>
+        <button type="button" class="close" (click)="depositModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Zum Aufladen deines Guthabens stehen dir mehrere Wege zur Verfügung:</p>
+        <p><b>PayPal</b> (empfohlen)<br />
+          Am schnellsten kannst Du dein Guthaben per PayPal aufladen.
+          Sende dazu einfach den gewünschten Betrag per
+          "<i>Geld an Freunde und Familie senden</i>"
+          mit dem Betreff <b>qcodis {{currentUser.id}}</b> an die Adresse
+          <b>paypal@qcodis.coffee</b>. Deine Einzahlung wird Dir innerhalb von 5 Minuten gutgeschrieben.</p>
+        <p><b>Überweisung</b><br />
+          Wenn Dir kein PayPal-Konto zur Verfügung steht, kannst Du den gewünschten Betrag auch per Überweisung einzahlen.</p>
+        <p class="pl-3">IBAN: DE59 2004 1111 0412 0739 00<br />
+          BIC: COBADEHDXXX<br />
+          Verwendungszweck: qcodis {{currentUser.id}}</p>
+        <p>Die Einzahlung per Überweisung kann bis zu 96h dauern.</p>
+        <p><b>Bar</b><br />
+          Natürlich kannst Du dein Konto auch aufladen, indem Du mir das Geld persönlich überreichst.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" (click)="depositModal.hide()">Schließen</button>
+      </div>
+    </div>
+  </div>
+</div>

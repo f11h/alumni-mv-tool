@@ -1,0 +1,62 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-plus"></i>
+        Karte verknüpfen
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(linkCreatedModal, failedModal)">
+            <app-user-selector (onUserSelected)="onUserSelected($event)" [disabled]="isAddingInProgress"></app-user-selector>
+            <div class="form-group">
+                <label for="cardId">Karten ID</label>
+                <input class="form-control" id="cardId" placeholder="Gib eine Karten ID ein" type="text"
+                       formControlName="cardId">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit" [disabled]="form.invalid || !selectedUser || isAddingInProgress">
+                    <spinner display="inline" *ngIf="isAddingInProgress"></spinner>
+                    Verknüpfung erstellen
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div bsModal #linkCreatedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Verknüpfung erstellt</h4>
+                <button type="button" class="close" (click)="linkCreatedModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Die Verknüpfung wurde erstellt.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="linkCreatedModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #failedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Fehler</h4>
+                <button type="button" class="close" (click)="failedModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Beim Anlegen der Verlinkung ist ein Fehler aufgetreten: {{httperrortext}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="failedModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>

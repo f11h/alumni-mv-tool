@@ -1,0 +1,95 @@
+<div class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mx-4">
+                    <div class="card-body p-4">
+                        <h1>Registrierung</h1>
+                        <p class="text-muted">Erstelle deinen Account für QCODIS</p>
+                        <form [formGroup]="form" (submit)="submitForm(successModal, warningModal)">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-user"></i></span>
+                                </div>
+                                <input [ngClass]="{'is-invalid': form.get('firstname').invalid && form.get('firstname').dirty}" type="text" class="form-control" placeholder="Vorname" formControlName="firstname">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-user"></i></span>
+                                </div>
+                                <input [ngClass]="{'is-invalid': form.get('lastname').invalid && form.get('lastname').dirty}" type="text" class="form-control" placeholder="Nachname" formControlName="lastname">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@</span>
+                                </div>
+                                <input [ngClass]="{'is-invalid': form.get('email').invalid && form.get('email').dirty}" type="email" class="form-control" placeholder="E-Mail" formControlName="email">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-lock"></i></span>
+                                </div>
+                                <input [ngClass]="{'is-invalid': form.get('password').invalid && form.get('password').dirty}" type="password" class="form-control" placeholder="Passwort" formControlName="password">
+                                <div class="invalid-feedback" *ngIf="form.get('password').hasError('minlength')">
+                                    Das Passwort benötigt eine Länge von mindestens 8 Zeichen
+                                </div>
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-lock"></i></span>
+                                </div>
+                                <input [ngClass]="{'is-invalid': form.get('passwordRepeat').invalid && form.get('passwordRepeat').dirty}" type="password" class="form-control" placeholder="Passwort wiederholen" formControlName="passwordRepeat">
+                                <div class="invalid-feedback" *ngIf="form.get('passwordRepeat').hasError('MatchPassword')">
+                                    Die beiden Passwörter stimmen nicht überein
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-primary" [disabled]="form.invalid || isRegistrationInProgress">
+                                <spinner *ngIf="isRegistrationInProgress" display="inline"></spinner>
+                                Account erstellen
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Registrierung erfolgreich</h4>
+                <button type="button" class="close" (click)="successModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Das Anlegen Deines Benutzerkontos war erfolgreich. Dir wurde eine E-Mail mit einem Registrierungslink zugesandt. Bitte klicke auf diesen Link um Deine E-Mail Adresse zu bestätigen. Danach kannst Du QCODIS nutzen.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success"(click)="successModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #warningModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-warning" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Fehler beim Durchführen der Registrierung</h4>
+                <button type="button" class="close" (click)="warningModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{warningText}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" (click)="warningModal.hide()">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>

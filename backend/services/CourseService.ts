@@ -1,3 +1,4 @@
+/*
 import {Injectable} from '@tsed/di';
 import {TypeORMService} from '@tsed/typeorm';
 import {Course} from '../model/Course';
@@ -39,3 +40,4 @@ export class CourseService implements OnServerReady {
         return (await this.repo.findOne(course.id, {relations: ['attendees']})).attendees.length;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 import {BodyParams, Constant, Controller, Get, PathParams, Post, Put, QueryParams, Response} from '@tsed/common';
 import {Unauthorized} from 'ts-httpexceptions';
 import {Attendee} from '../model/Attendee';
@@ -87,3 +88,4 @@ export class AttendeeController {
         return this.attendeeService.getAttendeeById(id, true);
     }
 }
+*/

@@ -1,0 +1,22 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <app-balance></app-balance>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3" *ngFor="let product of products">
+            <app-product [product]="product"></app-product>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <app-statistics scope="user"></app-statistics>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <app-statistics scope="global"></app-statistics>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <app-donation *ngIf="isDonationTimespan()"></app-donation>
+            <app-cat *ngIf="!isDonationTimespan()"></app-cat>
+        </div>
+    </div>
+</div>

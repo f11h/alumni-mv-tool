@@ -1,3 +1,4 @@
+/*
 import {Constant, Controller, Get, QueryParams} from '@tsed/common';
 import {Course} from '../model/Course';
 import {CourseService} from '../services/CourseService';
@@ -37,3 +38,4 @@ export class CourseController {
         return await this.courseService.getAllCourses(true);
     }
 }
+*/
