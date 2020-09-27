@@ -1,0 +1,20 @@
+{
+  "logger":{
+    "level": "DEBUG"
+  },
+  "typeorm": [
+    {
+      "entities": [
+        "model/**/*"
+      ],
+      "name": "default",
+      "type": "mariadb",
+      "host": "localhost",
+      "port": 3306,
+      "username": "amvt",
+      "password": "amvt",
+      "database": "amvt",
+      "synchronize": true
+    }
+  ]
+}
