@@ -23,15 +23,16 @@ export class AuthMiddleware implements IMiddleware {
             throw new Unauthorized("Invalid E-Mail or password provided!");
         }
 
+        const permissions = this.getEffectivePermissionFromMemberRoles(member.roles);
+
         if (options.permission != undefined) {
             $log.debug("Required permission is", options.permission);
-
             $log.debug(member.roles);
-            const permissions = this.getEffectivePermissionFromMemberRoles(member.roles);
-
             $log.debug("Member has following permissions:", permissions)
 
-            if (typeof options.permission === "string") {
+            if (permissions.includes("*")) {
+                $log.debug("User has root permissions");
+            } else if (typeof options.permission === "string") {
                 if (permissions.indexOf(options.permission) === -1) {
                     throw new Forbidden("Permission " + options.permission + " is required to access this resource");
                 }
@@ -61,9 +62,8 @@ export class AuthMiddleware implements IMiddleware {
                     throw new Forbidden("Permissions [" + (options.permission.all || "") + "] and at least one of [" + (options.permission.any || "") + "] is required to access this resource");
                 }
             }
-
-            locals.effective_roles = permissions;
         }
+        locals.effective_permissions = permissions;
         locals.member = member;
     }
 
@@ -93,6 +93,10 @@ export class AuthMiddleware implements IMiddleware {
     }
 
     private getUsernameAndPasswordFromAuthHeader(authHeader: string): [string, string] {
+        if (authHeader === undefined || authHeader === null) {
+            throw new Unauthorized("Auth Header must be set");
+        }
+
         if (authHeader.length < 6) {
             throw new BadRequest("Auth header must be valid Basic Auth!");
         }

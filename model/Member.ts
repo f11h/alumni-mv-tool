@@ -1,4 +1,14 @@
-import {Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn
+} from "typeorm";
 import {Email, Property} from "@tsed/common";
 import {Address} from "./Address";
 import {Transaction} from "./Transaction";

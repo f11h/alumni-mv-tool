@@ -39,14 +39,14 @@ export class TransactionController {
     public async getTransactionForMember(
         @QueryParams("memberId") memberId: string,
         @Locals("member") member: Member,
-        @Locals("effective_roles") effectiveRoles: string[]
+        @Locals("effective_permissions") effectivePermissions: string[]
     ): Promise<Transaction[]> {
 
         if (memberId === undefined) {
             throw new BadRequest("memberId must be set");
         }
 
-        if (memberId !== member.id && !effectiveRoles.includes("all_transaction.read")) {
+        if (memberId !== member.id && !effectivePermissions.includes("all_transaction.read")) {
             throw new Forbidden("Permission all_transaction.read is required to access this resource");
         }
 
@@ -64,14 +64,14 @@ export class TransactionController {
     public async getBalanceForMember(
         @QueryParams("memberId") memberId: string,
         @Locals("member") member: Member,
-        @Locals("effective_roles") effectiveRoles: string[]
+        @Locals("effective_permissions") effectivePermissions: string[]
     ): Promise<Balance> {
 
         if (memberId === undefined) {
             throw new BadRequest("memberId must be set");
         }
 
-        if (memberId !== member.id && !effectiveRoles.includes("all_transaction.read")) {
+        if (memberId !== member.id && !effectivePermissions.includes("all_transaction.read")) {
             throw new Forbidden("Permission all_transaction.read is required to access this resource");
         }
 

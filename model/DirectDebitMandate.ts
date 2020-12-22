@@ -1,4 +1,4 @@
-import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Property} from "@tsed/common";
 import {Address} from "./Address";
 import {Member} from "./Member";
@@ -10,15 +10,15 @@ export class DirectDebitMandate {
     @Property()
     id: string;
 
-    @Column({unique: true})
+    @Column({unique: true, nullable: true})
     @Property()
     mandateReference: string
 
-    @Column()
+    @Column({nullable: true})
     @Property()
     signedAt: Date;
 
-    @Column()
+    @Column({nullable: true})
     @Property()
     accountOwnerName: string;
 
@@ -28,13 +28,14 @@ export class DirectDebitMandate {
 
     @Column()
     @Property()
-    bankName: string;
-
-    @Column()
-    @Property()
     IBAN: string;
 
+    @Column({nullable: true})
+    @Property()
+    BIC: string;
+
     @OneToOne(member => Member, m => m.directDebitMandate)
+    @JoinColumn()
     member: Member;
 
     public constructor(course?: Partial<DirectDebitMandate>) {

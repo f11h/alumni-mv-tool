@@ -1,12 +1,12 @@
 import {Column, Entity, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Member} from "./Member";
-import {Property, PropertyDeserialize, Req, Required} from "@tsed/common";
+import {OnDeserialize, Property, PropertyDeserialize, Req, Required} from "@tsed/common";
 
 @Entity()
 export class Role {
 
     @PrimaryGeneratedColumn("uuid")
-    @PropertyDeserialize(() => undefined)
+    @OnDeserialize(() => undefined)
     id: string;
 
     @Column()

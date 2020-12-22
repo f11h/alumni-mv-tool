@@ -1,13 +1,21 @@
 import {Service} from "@tsed/di";
 import {Member} from "../model/Member";
 import {MemberRepository} from "../dao/MemberRepository";
-import { $log } from "@tsed/common";
+import {$log} from "@tsed/common";
 import * as bcrypt from "bcrypt";
+import {Role} from "../model/Role";
 
 @Service()
 export class MemberService {
 
     constructor(private memberRepository: MemberRepository) {
+    }
+
+    /**
+     * Gets the roles of a member by its member id.
+     */
+    public async getMemberRoles(id: string): Promise<Role[]> {
+        return this.memberRepository.getMemberRoles(id);
     }
 
     public async getMemberById(id: string): Promise<Member> {
